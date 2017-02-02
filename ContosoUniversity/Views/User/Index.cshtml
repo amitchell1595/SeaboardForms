@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>User Change Forms</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "color:#d50000;" })
+</p>
+@using (Html.BeginForm("Index", "User", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Change Type", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Company", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Supervisor", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Effective Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Completed Status", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangeType.ChangeTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EffectiveDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @style = "color:#d50000;" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @style = "color:#d50000;" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @style = "color:#d50000;" })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

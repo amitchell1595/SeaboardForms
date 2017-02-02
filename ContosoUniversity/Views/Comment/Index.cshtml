@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Models.Comment>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Comments";
+}
+
+<h2>Comments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "color:#d50000;" })
+</p>
+@using (Html.BeginForm("Index", "Comment", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("UnitID", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Comments", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Ignore", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ignore)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CommentID }, new { @style = "color:#d50000;" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CommentID }, new { @style = "color:#d50000;" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CommentID }, new { @style = "color:#d50000;" })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

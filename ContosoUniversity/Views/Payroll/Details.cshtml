@@ -1,0 +1,26 @@
+﻿@model ContosoUniversity.Models.Payroll
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Payroll</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PayrollName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PayrollName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PayrollID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

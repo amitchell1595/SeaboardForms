@@ -1,0 +1,849 @@
+﻿@model ContosoUniversity.Models.Driver
+<script src="~/Content/CustomJava2.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+
+        $("#DivisionID").change(function () {
+            $("#DomicileID").empty();
+            $.get('/Home/GetDomicilesForDivison/' + $(this).val(), function (response) {
+                var parsedJson = $.parseJSON(response);
+
+
+                $("#DomicileID").append("<option value='0'>Select an Orbit</option>");
+                $.each(parsedJson, function (k, v) {
+                    // $('#Province').append($('<option>').text(v.text).attr('value', v.val));
+                    $("#DomicileID").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                });
+            });
+
+
+
+
+        });
+
+        $("#DriverTypeID").change(function () {
+            $("#DriverPayrollID").empty();
+            $.get('/Home/GetPayrollsForDriver/' + $(this).val(), function (response) {
+                var parsedJson = $.parseJSON(response);
+
+
+                $("#DriverPayrollID").append("<option value='0'>Select Payroll</option>");
+                $.each(parsedJson, function (k, v) {
+                    // $('#Province').append($('<option>').text(v.text).attr('value', v.val));
+                    $("#DriverPayrollID").append("<option value='" + v.Value + "'>" + v.Text + "</option>");
+                });
+            });
+
+
+
+
+        });
+
+
+        $("#DriverID").blur(function () {
+
+            if (document.getElementById("DriverChangeTypeID").value > 1) {
+            $.get('/Driver/GetTMWInfoDriver/' + $(this).val(), function (response) {
+                var parsedJson = $.parseJSON(response);
+        
+               
+                $.each(parsedJson, function (k, v) {
+                    /* alert('Value: ' + v.Value + '  Text: ' + v.Text) */
+                    if (v.Value === 'mpp_firstname' && v.Text === null) {
+
+                        alert('Driver ID not found. You may still submit your request, however support may require addtional information in the comments below.');
+                        
+                        return false;
+                    } else {
+
+
+                        if (v.Value === 'mpp_firstname') {
+                            document.getElementById("DriverFirstName").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_lastname') {
+                            document.getElementById("DriverLastName").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_address1') {
+                            document.getElementById("Address").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_zip') {
+                            document.getElementById("PostalCode").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_homephone') {
+                            document.getElementById("HomePhone").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_currentphone') {
+                            document.getElementById("CellPhone").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_email') {
+                            document.getElementById("Email").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_emerphone') {
+                            document.getElementById("EmergencyNumber").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_emername') {
+                            document.getElementById("EmergencyName").value = v.Text;
+                        }
+                        if (v.Value === 'mpp_country') {
+                            document.getElementById("CountryID").value = parseInt(v.Text);
+                        }
+                        if (v.Value === 'mpp_province') {
+                            document.getElementById("ProvinceID").value = parseInt(v.Text);
+                        }
+                        if (v.Value === 'mpp_city') {
+                            document.getElementById("CityID").value = parseInt(v.Text);
+                        }
+                        if (v.Value === 'mpp_division') {
+                            if (v.Text === '0') {
+                                document.getElementById("DivisionID").value = '';
+
+                            } else {
+                                document.getElementById("DivisionID").value = parseInt(v.Text);
+                            }
+                        }
+                        if (v.Value === 'mpp_company') {
+                            if (v.Text === '0') {
+                                document.getElementById("EntityID").value = '';
+
+                            } else {
+                                document.getElementById("EntityID").value = parseInt(v.Text);
+                            }
+                        }
+                        if (v.Value === 'mpp_domicile') {
+                            if (v.Text === '0') {
+                                document.getElementById("DomicileID").value = '';
+
+                            } else {
+                                document.getElementById("DomicileID").value = parseInt(v.Text);
+                            }
+                        }
+                        if (v.Value === 'mpp_type1') {
+                            if (v.Text === '0') {
+                                document.getElementById("DriverTypeID").value = '';
+
+                            } else {
+                                document.getElementById("DriverTypeID").value = parseInt(v.Text);
+                            }
+                        }
+                        if (v.Value === 'mpp_type2') {
+                            if (v.Text === '0') {
+                                document.getElementById("PayLevelID").value = '';
+
+                            } else {
+                                document.getElementById("PayLevelID").value = parseInt(v.Text);
+                            }
+                        }
+                       
+
+                    }
+                    
+                  
+                });
+                if (document.getElementById("DriverTypeID").value > 1) {
+                    $('#DriverTypeID').change();
+                }
+
+            });
+        }
+        });
+
+        if ($("#DriverChangeTypeID option:selected").text() == "New Driver") {
+            $('#dNew1').show();
+            $('#dNew2').show();
+            $('#dNew3').show();
+            $('#dNew4').show();
+            $('#dNew5').show();
+            $('#dNew6').show();
+            $('#dNew7').show();
+            $('#dNew8').show();
+            $('#dNew9').show();
+            $('#dNew10').show();
+            $('#dNew11').show();
+
+            $('#dNewH1').show();
+            $('#dNewH2').show();
+            $('#dNewH3').show();
+            $('#dNewH4').show();
+            $('#dNewH5').show();
+
+            $('#dNewL1').show();
+            $('#dNewL2').show();
+            $('#dNewL3').show();
+            $('#dNewL4').show();
+            $('#dNewL5').show();
+
+            $('#dExit').hide();
+
+            $('#dChange').hide();
+        }
+        else if ($("#DriverChangeTypeID option:selected").text() == "Exit") {
+            $('#dExit').show();
+
+            $('#dChange').hide();
+
+            $('#dNew1').show();
+            $('#dNew2').hide();
+            $('#dNew3').hide();
+            $('#dNew4').hide();
+            $('#dNew5').hide();
+            $('#dNew6').hide();
+            $('#dNew7').hide();
+            $('#dNew8').hide();
+            $('#dNew9').hide();
+            $('#dNew10').show();
+            $('#dNew11').hide();
+
+            $('#dNewH1').hide();
+            $('#dNewH2').hide();
+            $('#dNewH3').hide();
+            $('#dNewH4').hide();
+            $('#dNewH5').show();
+
+            $('#dNewL1').hide();
+            $('#dNewL2').hide();
+            $('#dNewL3').hide();
+            $('#dNewL4').hide();
+            $('#dNewL5').show();
+        }
+        else if ($("#DriverChangeTypeID option:selected").text() == "Driver Transfer") {
+            $('#dExit').hide();
+
+            $('#dNew1').show();
+            $('#dNew2').hide();
+            $('#dNew3').hide();
+            $('#dNew4').show();
+            $('#dNew5').hide();
+            $('#dNew6').hide();
+            $('#dNew7').hide();
+            $('#dNew8').hide();
+            $('#dNew9').hide();
+            $('#dNew10').show();
+            $('#dNew11').hide();
+
+            $('#dNewH1').show();
+            $('#dNewH2').hide();
+            $('#dNewH3').hide();
+            $('#dNewH4').hide();
+            $('#dNewH5').show();
+
+            $('#dNewL1').show();
+            $('#dNewL2').hide();
+            $('#dNewL3').hide();
+            $('#dNewL4').hide();
+            $('#dNewL5').show();
+
+            $('#dChange').show();
+        }
+        else if ($("#DriverChangeTypeID option:selected").text() == "Driver Information Change") {
+            $('#dExit').hide();
+
+            $('#dNew1').hide();
+            $('#dNew2').hide();
+            $('#dNew3').hide();
+            $('#dNew4').hide();
+            $('#dNew5').show();
+            $('#dNew6').show();
+            $('#dNew7').show();
+            $('#dNew8').show();
+            $('#dNew9').hide();
+            $('#dNew10').hide();
+            $('#dNew11').hide();
+
+            $('#dNewH1').hide();
+            $('#dNewH2').show();
+            $('#dNewH3').show();
+            $('#dNewH4').hide();
+            $('#dNewH5').hide();
+
+            $('#dNewL1').hide();
+            $('#dNewL2').show();
+            $('#dNewL3').show();
+            $('#dNewL4').hide();
+            $('#dNewL5').hide();
+
+            $('#dChange').show();
+        }
+        else {
+
+            $('#dExit').hide();
+
+            $('#dNew1').hide();
+            $('#dNew2').hide();
+            $('#dNew3').hide();
+            $('#dNew4').hide();
+            $('#dNew5').hide();
+            $('#dNew6').hide();
+            $('#dNew7').hide();
+            $('#dNew8').hide();
+            $('#dNew9').hide();
+            $('#dNew10').hide();
+            $('#dNew11').hide();
+
+            $('#dNewH1').hide();
+            $('#dNewH2').hide();
+            $('#dNewH3').hide();
+            $('#dNewH4').hide();
+            $('#dNewH5').hide();
+
+            $('#dNewL1').hide();
+            $('#dNewL2').hide();
+            $('#dNewL3').hide();
+            $('#dNewL4').hide();
+            $('#dNewL5').hide();
+
+            $('#dChange').hide();
+
+        }
+
+        $('#DriverChangeTypeID').change(function () {
+            if ($("#DriverChangeTypeID option:selected").text() == "New Driver") {
+                $('#dNew1').show();
+                $('#dNew2').show();
+                $('#dNew3').show();
+                $('#dNew4').show();
+                $('#dNew5').show();
+                $('#dNew6').show();
+                $('#dNew7').show();
+                $('#dNew8').show();
+                $('#dNew9').show();
+                $('#dNew10').show();
+                $('#dNew11').show();
+
+                $('#dNewH1').show();
+                $('#dNewH2').show();
+                $('#dNewH3').show();
+                $('#dNewH4').show();
+                $('#dNewH5').show();
+
+                $('#dNewL1').show();
+                $('#dNewL2').show();
+                $('#dNewL3').show();
+                $('#dNewL4').show();
+                $('#dNewL5').show();
+
+                $('#dExit').hide();
+
+                $('#dChange').hide();
+            }
+            else if ($("#DriverChangeTypeID option:selected").text() == "Exit") {
+                $('#dExit').show();
+
+                $('#dChange').hide();
+
+                $('#dNew1').show();
+                $('#dNew2').hide();
+                $('#dNew3').hide();
+                $('#dNew4').hide();
+                $('#dNew5').hide();
+                $('#dNew6').hide();
+                $('#dNew7').hide();
+                $('#dNew8').hide();
+                $('#dNew9').hide();
+                $('#dNew10').show();
+                $('#dNew11').hide();
+
+                $('#dNewH1').hide();
+                $('#dNewH2').hide();
+                $('#dNewH3').hide();
+                $('#dNewH4').hide();
+                $('#dNewH5').show();
+
+                $('#dNewL1').hide();
+                $('#dNewL2').hide();
+                $('#dNewL3').hide();
+                $('#dNewL4').hide();
+                $('#dNewL5').show();
+            }
+            else if ($("#DriverChangeTypeID option:selected").text() == "Driver Transfer") {
+                $('#dExit').hide();
+
+                $('#dNew1').show();
+                $('#dNew2').hide();
+                $('#dNew3').hide();
+                $('#dNew4').show();
+                $('#dNew5').hide();
+                $('#dNew6').hide();
+                $('#dNew7').hide();
+                $('#dNew8').hide();
+                $('#dNew9').hide();
+                $('#dNew10').show();
+                $('#dNew11').hide();
+
+                $('#dNewH1').show();
+                $('#dNewH2').hide();
+                $('#dNewH3').hide();
+                $('#dNewH4').hide();
+                $('#dNewH5').show();
+
+                $('#dNewL1').show();
+                $('#dNewL2').hide();
+                $('#dNewL3').hide();
+                $('#dNewL4').hide();
+                $('#dNewL5').show();
+
+                $('#dChange').show();
+            }
+            else if ($("#DriverChangeTypeID option:selected").text() == "Driver Information Change") {
+                $('#dExit').hide();
+
+                $('#dNew1').hide();
+                $('#dNew2').hide();
+                $('#dNew3').hide();
+                $('#dNew4').hide();
+                $('#dNew5').show();
+                $('#dNew6').show();
+                $('#dNew7').show();
+                $('#dNew8').show();
+                $('#dNew9').hide();
+                $('#dNew10').hide();
+                $('#dNew11').hide();
+
+                $('#dNewH1').hide();
+                $('#dNewH2').show();
+                $('#dNewH3').show();
+                $('#dNewH4').hide();
+                $('#dNewH5').hide();
+
+                $('#dNewL1').hide();
+                $('#dNewL2').show();
+                $('#dNewL3').show();
+                $('#dNewL4').hide();
+                $('#dNewL5').hide();
+
+                $('#dChange').show();
+            }
+            else {
+
+                $('#dExit').hide();
+
+                $('#dNew1').hide();
+                $('#dNew2').hide();
+                $('#dNew3').hide();
+                $('#dNew4').hide();
+                $('#dNew5').hide();
+                $('#dNew6').hide();
+                $('#dNew7').hide();
+                $('#dNew8').hide();
+                $('#dNew9').hide();
+                $('#dNew10').hide();
+                $('#dNew11').hide();
+
+                $('#dNewH1').hide();
+                $('#dNewH2').hide();
+                $('#dNewH3').hide();
+                $('#dNewH4').hide();
+                $('#dNewH5').hide();
+
+                $('#dNewL1').hide();
+                $('#dNewL2').hide();
+                $('#dNewL3').hide();
+                $('#dNewL4').hide();
+                $('#dNewL5').hide();
+
+                $('#dChange').hide();
+
+            }
+
+        });
+    });
+</script>
+
+
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Submit Driver Request</h2>
+
+
+@using (Html.BeginForm("Create", "Driver", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.SiteType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SiteType, Model.SiteTypes, "Select a Country", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SiteType, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <h3>Driver Information</h3>
+        <hr style="border-bottom: 1px solid;" />
+        <div class="form-group row">
+            <div class="col-xs-3">
+
+
+                @Html.LabelFor(model => model.DriverChangeTypeID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.DriverChangeTypeID, Model.ChangeTypes, "Select Change Type", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.DriverChangeTypeID, "", new { @class = "text-danger" })
+
+
+
+
+            </div>
+
+            <div class="col-xs-3">
+
+                @Html.LabelFor(model => model.DriverID, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.DriverID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DriverID, "Leave blank for new driver.", new { @class = "text-danger" })
+
+
+
+
+            </div>
+
+            <div class="col-xs-3" id="dNew1" name="dNew1" style="display: none">
+
+
+                @Html.LabelFor(model => model.DriverTypeID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.DriverTypeID, Model.DriverTypes, "Select Driver Type", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.DriverTypeID, "", new { @class = "text-danger" })
+
+
+
+
+            </div>
+
+
+
+
+
+            <div class="col-xs-2" id="dNew2" name="dNew2" style="display: none">
+
+                @Html.LabelFor(model => model.BrokerUnitNumber, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.BrokerUnitNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BrokerUnitNumber, "", new { @class = "text-danger" })
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group row">
+
+            <div class="col-xs-3">
+
+                @Html.LabelFor(model => model.DriverFirstName, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.DriverFirstName, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.DriverFirstName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+
+                @Html.LabelFor(model => model.DriverLastName, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.DriverLastName, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.DriverLastName, "", new { @class = "text-danger" })
+
+            </div>
+
+
+
+
+        </div>
+
+ 
+        <div class="form-group row" id="dNew3" name="dNew3" style="display: none">
+
+
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.HireDate, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.HireDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HireDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.OrientationStart, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.OrientationStart, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OrientationStart, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.OrientationEnd, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.OrientationEnd, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OrientationEnd, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row" id="dChange" name="dChange" style="display: none">
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.DriverEffectiveDate, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.DriverEffectiveDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DriverEffectiveDate, "", new { @class = "text-danger" })
+            </div>
+
+
+        </div>
+
+        <div class="form-group row" id="dExit" name="dExit" style="display: none">
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.LastDayWorked, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.LastDayWorked, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastDayWorked, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.ExitDate, htmlAttributes: new { @class = "control-label" })*
+                @Html.EditorFor(model => model.ExitDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExitDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.ExitReasonID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.ExitReasonID, Model.ExitReasons, "Select Reason", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.ExitReasonID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <h3 id="dNewH1" name="dNewH1" style="display: none">Payroll Information</h3>
+        <hr style="border-bottom: 1px solid; display: none" id="dNewL1" name="dNewL1" />
+        <div class="form-group row" id="dNew4" name="dNew4" style="display: none">
+
+
+
+
+            <div class="col-xs-3">
+
+
+                @Html.LabelFor(model => model.DriverPayrollID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.DriverPayrollID, Model.DriverPayrolls, "Select Payroll", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.DriverPayrollID, "", new { @class = "text-danger" })
+
+
+
+            </div>
+            <div class="col-xs-3">
+
+                @Html.LabelFor(model => model.PayLevelID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.PayLevelID, Model.PayLevels, "Select Pay Level", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.PayLevelID, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.OOBusinessNumber, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.OOBusinessNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OOBusinessNumber, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <h3 id="dNewH2" name="dNewH2" style="display: none;">Address Information</h3>
+        <hr style="border-bottom: 1px solid; display: none;" id="dNewL2" name="dNewL2" />
+
+        <div class="form-group row" id="dNew5" name="dNew5" style="display: none;">
+
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })*
+
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group row" id="dNew6" name="dNew6" style="display: none;">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CountryID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.CountryID, Model.Countries, "Select a Country", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.ProvinceID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.ProvinceID, Model.Provinces, "Select a Province", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.CityID, Model.Cities, "Select a City", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <h3 id="dNewH3" name="dNewH3" style="display: none;">Contact Information</h3>
+        <hr style="border-bottom: 1px solid; display: none;" id="dNewL3" name="dNewL3" />
+        <div class="form-group row" id="dNew7" name="dNew7" style="display: none;">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.HomePhone, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.HomePhone, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "123-456-7890" } })
+                @Html.ValidationMessageFor(model => model.HomePhone, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CellPhone, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "123-456-7890" } })
+                @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "example@seaboard.acl.ca" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+
+
+        </div>
+
+        <div class="form-group row" id="dNew8" name="dNew8" style="display: none;">
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.EmergencyNumber, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.EmergencyNumber, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "123-456-7890" } })
+                @Html.ValidationMessageFor(model => model.EmergencyNumber, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.EmergencyName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.EmergencyName, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.EmergencyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <h3 id="dNewH4" name="dNewH4" style="display: none;">License Information</h3>
+        <hr style="border-bottom: 1px solid; display: none;" id="dNewL4" name="dNewL4" />
+        <div class="form-group row" id="dNew9" name="dNew9" style="display: none;">
+
+            <div class="col-xs-3">
+
+                @Html.LabelFor(model => model.LicenseProvinceID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.LicenseProvinceID, Model.Provinces, "Select a Province", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.LicenseProvinceID, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.LicenseClass, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.LicenseClass, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.LicenseClass, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.LicenseNumber, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.LicenseNumber, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.LicenseNumber, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <h3 id="dNewH5" name="dNewH5" style="display: none;">TMW Information</h3>
+        <hr style="border-bottom: 1px solid; display: none;" id="dNewL5" name="dNewL5" />
+        <div class="form-group row" id="dNew10" name="dNew10" style="display: none;">
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.EntityID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.EntityID, Model.Entities, "Select an Entity", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.EntityID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.DivisionID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.DivisionID, Model.Divisions, "Select a Division", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.DivisionID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.DomicileID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.DomicileID, Model.Orbits, "Select an Orbit", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.DomicileID, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group row" id="dNew11" name="dNew11" style="display: none;">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.TerminalID, htmlAttributes: new { @class = "control-label" })*
+                @Html.DropDownListFor(model => model.TerminalID, Model.Terminals, "Select a Terminal", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.TerminalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        
+        
+        <h3>Additional Information</h3>
+        <hr style="border-bottom: 1px solid;" />
+      
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label" })
+
+                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+
+
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label" })
+
+                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div id="phoneList">
+
+
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                <input type="submit" value="Submit Driver Request" class="btn btn-default" />
+            </div>
+
+        </div>
+    </div>
+
+}
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+

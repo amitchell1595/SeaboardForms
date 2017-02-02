@@ -1,0 +1,26 @@
+﻿@model ContosoUniversity.Models.ChangeType
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChangeType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChangeTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChangeTypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ChangeTypeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

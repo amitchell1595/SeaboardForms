@@ -1,0 +1,275 @@
+﻿@model ContosoUniversity.Models.Site
+<script src="~/Content/CustomJava.js" type="text/javascript"></script>
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Submit Site Request</h2>
+
+
+@using (Html.BeginForm("Create", "Sites", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
+    if ((Request.Browser.Browser == "IE"))
+    {
+
+            <h1>When using this webpage, please use google chrome.</h1>
+    }
+    else
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.SiteType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SiteType, Model.SiteTypes, "Select a Country", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SiteType, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="form-group row">
+            <div class="col-xs-3">
+             
+
+                @Html.LabelFor(model => model.SiteTypeID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.SiteTypeID, Model.SiteTypes, "Select Site Type", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.SiteTypeID, "", new { @class = "text-danger" })
+
+  
+
+             </div>
+
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;"} })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+
+                @Html.LabelFor(model => model.AltID, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.AltID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AltID, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
+
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CountryID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.CountryID, Model.Countries, "Select a Country", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.ProvinceID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.ProvinceID, Model.Provinces, "Select a Province", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CityID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.CityID, Model.Cities, "Select a City", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.MainPhone, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.MainPhone, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "123-456-7890"  } })
+                @Html.ValidationMessageFor(model => model.MainPhone, "", new { @class = "text-danger" })
+                </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.SecondaryPhone, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.SecondaryPhone, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "123-456-7890" } })
+                @Html.ValidationMessageFor(model => model.SecondaryPhone, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Fax, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "123-456-7890" } })
+                @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @style = "width: 900px;", placeholder = "example@company.com" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.AxleID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.AxleID, Model.Axles, "Select an Axle Type", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.AxleID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.SitePriority, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.SitePriority, Model.SitePriorities, "Select Priority", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.SitePriority, "", new { @class = "text-danger" })
+            </div>
+            
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.EntityID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.EntityID, Model.Entities, "Select an Entity", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.EntityID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.DivisionID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.DivisionID, Model.Divisions, "Select a Division", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.DivisionID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                    @Html.LabelFor(model => model.OrbitID, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.OrbitID, Model.Orbits, "Select a Service Fleet", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                    @Html.ValidationMessageFor(model => model.OrbitID, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.BillToID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.BillToID, Model.BillTos, "Select Bill To", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.BillToID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.TerminalID, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.TerminalID, Model.Terminals, "Select Terminal", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.TerminalID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.AutomaticDips, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.AutomaticDips, Model.DeliveryTypes, "Select Delivery Type", htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.AutomaticDips, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.SiteUpload, new { @class = "control-label " })
+                <input type="file" id="SiteMap" name="upload" class="form-control" style="width: 900px;" accept="image/gif,image/jpeg,image/jpg,image/bmp" />
+                @Html.ValidationMessageFor(model => model.SiteUpload, "", new { @class = "text-danger" })
+                @*@Html.TextBoxFor(m => m.SiteUpload, new { type = "file", name = "SiteUpload" })*@
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Comment1, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Comment1, htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.Comment1, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Comment2, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Comment2, htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.Comment2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.AdditionalInfo, htmlAttributes: new { @class = "form-control", @style = "width: 900px;" })
+                @Html.ValidationMessageFor(model => model.AdditionalInfo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label" })
+
+                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control", @style = "width: 900px;" } })
+                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+   
+
+                </div>
+
+                <div class="col-xs-3">
+                    @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label" })
+
+                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { disabled = "disabled", @readonly = "readonly", @class = "form-control", @style = "width: 900px;" } })
+                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        <div class="form-group row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.TankInfo, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.TankInfo, htmlAttributes: new { @class = "form-control", @style = "width: 900px; height: 200px;" })
+                @Html.ValidationMessageFor(model => model.TankInfo, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+
+
+        <div id="phoneList">
+
+                  
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-xs-3">
+                <input type="submit" value="Submit Site Request" class="btn btn-default" />
+            </div>
+
+        </div>
+
+        </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+}
+

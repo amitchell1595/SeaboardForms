@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Seaboard</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript">
+        var appInsights=window.appInsights||function(config){
+            function s(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},r=document,f=window,e="script",o=r.createElement(e),i,u;for(o.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",r.getElementsByTagName(e)[0].parentNode.appendChild(o),t.cookie=r.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)s("track"+i.pop());return config.disableExceptionTracking||(i="onerror",s("_"+i),u=f[i],f[i]=function(config,r,f,e,o){var s=u&&u(config,r,f,e,o);return s!==!0&&t["_"+i](config,r,f,e,o),s}),t
+        }({
+            instrumentationKey:"615aadc5-8508-46e7-aa93-713181a155ae"
+        });
+        
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               @* @Html.ActionLink("Seaboard Support", "Index", "Home", new { area = "" }, new { @class = "" })*@
+                <a href='@Url.Action("Index", "Home")'>
+                    <img src='@Url.Content("~/Images/logo.jpg")' />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
+                    <li>@Html.ActionLink("User Change Form", "Create", "User", null, new { @style = "color:#d50000;" })</li>
+                    <li>@Html.ActionLink("Site Change Form", "Index", "Sites", null, new { @style = "color:#d50000;" })</li>
+                    <li>@Html.ActionLink("Driver Change Form", "Create", "Driver", null, new { @style = "color:#d50000;" })</li>
+                    @*<li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Change Forms
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("User", "Index", "User")</li>
+                        </ul>
+                    </li>*@
+                    @*<li>@Html.ActionLink("Sites", "Index", "Course")</li>
+                    <li>@Html.ActionLink("Tickets", "Index", "Instructor")</li>
+                    <li>@Html.ActionLink("Support", "Index", "Department")</li>*@
+                </ul>
+                <ul class="nav navbar-nav  navbar-right">
+                    <li class="navbar-text">@Html.ViewContext.HttpContext.User.Identity.Name</li>
+                </ul> 
+            </div>
+        </div>
+    </div>
+    <hr/>
+ 
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Seaboard</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

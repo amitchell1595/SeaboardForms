@@ -1,0 +1,62 @@
+﻿@model ContosoUniversity.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>User Change Form Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ignore)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ignore)
+        </dd>
+
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Enrollments)
+        </dt>*@
+        @*<dd>
+            <table class="table">
+                <tr>
+                    <th>Course Title</th>
+                    <th>Grade</th>
+                </tr>
+                @foreach (var item in Model.Enrollments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>*@
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CommentID }, new { @style = "color:#d50000;" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @style = "color:#d50000;" })
+</p>

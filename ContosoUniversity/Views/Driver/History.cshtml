@@ -1,0 +1,99 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Models.Driver>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Drivers";
+}
+
+<h2>Driver Change Forms History</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "color:#d50000;" })
+</p>
+@using (Html.BeginForm("History", "Driver", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Change Type", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("ID", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Hire Date", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Exit Date", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Approved", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("TMW", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Peoplenet", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Admin Controls", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverChangeType.DriverChangeTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverID) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverFirstName) &nbsp; @Html.DisplayFor(modelItem => item.DriverLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HireDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExitDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Approved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedToTMW)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pending)
+            </td>
+            <td>
+                New TMW: @Html.ActionLink("Add/Update", "AddToNewTMW", new { id = item.ID }, new { @style = "color:#d50000;" }) | @Html.ActionLink("Terminate", "RemoveFromNewTMW", new { id = item.ID, modify = @Html.ViewContext.HttpContext.User.Identity.Name }, new { @style = "color:#d50000;" }) 
+                <br/>
+                3335: @Html.ActionLink("Add", "AddTo3335", new { id = item.ID }, new { @style = "color:#d50000;" }) | @Html.ActionLink("Terminate", "RemoveFrom3335", new { id = item.ID }, new { @style = "color:#d50000;" })
+       
+                <br />
+                1589: @Html.ActionLink("Add", "AddTo1589", new { id = item.ID }, new { @style = "color:#d50000;" }) | @Html.ActionLink("Terminate", "RemoveFrom1589", new { id = item.ID }, new { @style = "color:#d50000;" })
+
+                <br />
+                Form: @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @style = "color:#d50000;" }) | @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @style = "color:#d50000;" }) 
+
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("History", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

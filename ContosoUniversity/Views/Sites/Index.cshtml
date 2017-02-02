@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Models.Site>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Sites";
+}
+
+<h2>Site Change Forms</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "color:#d50000;" })
+</p>
+@using (Html.BeginForm("Index", "Sites", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }, new { @style = "color:#d50000;" })
+        </th>
+        <th>
+            @Html.ActionLink("Completed Status", "Index", null, new { @style = "color:#d50000;" })
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RequestID }, new { @style = "color:#d50000;" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RequestID }, new { @style = "color:#d50000;" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RequestID }, new { @style = "color:#d50000;" })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

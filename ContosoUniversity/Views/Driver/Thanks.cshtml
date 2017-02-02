@@ -1,0 +1,40 @@
+﻿@model PagedList.IPagedList<ContosoUniversity.Models.Driver>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Drivers";
+}
+
+@using (Html.BeginForm("Thanks", "Driver", FormMethod.Get))
+{
+
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Thanks!</title>
+    </head>
+
+
+
+    <body>
+        <hgroup>
+            <h1>Your driver change form has been sent to support!</h1>
+        </hgroup>
+
+
+            @Html.ActionLink("Submit Another Driver Form", "Create", null, new { @style = "color:#d50000;" })
+    
+      
+
+        <a href="https://seaintranet.seaboard.acl.local/" style="color:#d50000;"  class="pmtallocated pull-right"  dir="rtl">Return to SeaNet</a>
+    </body>
+</html>
+
+
+}
+
+
+
+

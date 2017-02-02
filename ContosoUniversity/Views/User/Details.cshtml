@@ -1,0 +1,144 @@
+﻿@model ContosoUniversity.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>User Change Form Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ChangeTypeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChangeType.ChangeTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.CompanyName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PayrollID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payroll.PayrollName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SupervisorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupervisorName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationsAndFolders)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationsAndFolders)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionalInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdditionalInfo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EffectiveDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Completed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Completed)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Enrollments)
+        </dt>*@
+        @*<dd>
+            <table class="table">
+                <tr>
+                    <th>Course Title</th>
+                    <th>Grade</th>
+                </tr>
+                @foreach (var item in Model.Enrollments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>*@
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @style = "color:#d50000;" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @style = "color:#d50000;" })
+</p>

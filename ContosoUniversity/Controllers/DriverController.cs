@@ -571,7 +571,7 @@ namespace ContosoUniversity.Controllers
             site.Axles = new SelectList(db.Axles, "AxleID", "AxleName");
             site.Orbits = new SelectList(db.Domiciles, "DomicileID", "DomicileName");
 
-
+             
             if (TryUpdateModel(site, "", new string[] { "DriverChangeTypeID", "DriverID", "RejectReason", "Approved", "DriverTypeID", "OOBusinessNumber", "BrokerUnitNumber", "DriverPayrollID", "DriverFirstName", "DriverLastName", "PayLevelID", "Address", "PostalCode", "CountryID", "ProvinceID", "LicenseProvinceID", "CityID", "HomePhone", "CellPhone", "EMail", "EmergencyName", "EmergencyNumber", "LicenseClass", "LicenseNumber", "EntityID", "DivisionID", "DomicileID", "TerminalID", "BirthDate", "HireDate", "OrientationStart", "OrientationEnd", "LastDayWorked", "ExitDate", "ExitReasonID", "Comments" }))
             {
                 try

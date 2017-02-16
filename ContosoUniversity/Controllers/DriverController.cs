@@ -367,7 +367,7 @@ namespace ContosoUniversity.Controllers
 
                     }
 
-                    if (site.DriverPayrollID == null)
+                    if (site.DriverPayrollID == null || site.DriverPayrollID == 0)
                     {
                         ModelState.AddModelError("DriverPayrollID", "Please select a payroll.");
 
